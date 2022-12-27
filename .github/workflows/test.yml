@@ -1,7 +1,7 @@
 name: Test container
 
 on:
-  package:
+  registry_package:
     types: [published, updated]
 
 jobs:
