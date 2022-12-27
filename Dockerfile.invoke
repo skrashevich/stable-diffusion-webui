@@ -15,7 +15,8 @@ ADD links.txt download.sh checksums.sha256 /docker/
 RUN chmod +x /docker/download.sh
 
 RUN git clone https://github.com/invoke-ai/InvokeAI.git /stable-diffusion
-
+ADD invoke/v2-inference.yaml /stable-diffusion/configs/stable-diffusion/v2-inference.yaml
+ADD invoke/v2-inpainting-inference.yaml /stable-diffusion/configs/stable-diffusion/v2-inpainting-inference.yaml
 WORKDIR /stable-diffusion
 
 RUN --mount=type=cache,target=/root/.cache/pip <<EOF
