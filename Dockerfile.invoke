@@ -2,8 +2,8 @@
 
 FROM bash:alpine3.15 as data
 
-RUN apk add parallel aria2
-ADD links.txt download.sh checksums.sha256 /docker/
+RUN apk add parallel aria2 pigz
+ADD links.txt download.sh pigz.sh checksums.sha256 /docker/
 RUN chmod +x /docker/download.sh
 RUN --mount=type=cache,target=/data,id=stablediffusion-downloaded /docker/download.sh
 
@@ -35,7 +35,7 @@ EOF
 RUN <<EOF
 apt-get update
 # apt-get install build-essential python3-opencv libopencv-dev -y
-apt-get install make g++ libopencv-dev -y
+apt-get install make g++ libopencv-dev pigz -y
 apt-get clean
 cd /usr/lib/x86_64-linux-gnu/pkgconfig/
 ln -sf opencv4.pc opencv.pc

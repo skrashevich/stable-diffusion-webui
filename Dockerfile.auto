@@ -30,8 +30,8 @@ RUN aria2c -x 5 --dir / --out wheel.whl 'https://github.com/AbdBarho/stable-diff
 
 FROM bash:alpine3.15 as data
 
-RUN apk add parallel aria2
-ADD links.txt download.sh checksums.sha256 /docker/
+RUN apk add parallel aria2 pigz
+ADD links.txt download.sh pigz.sh checksums.sha256 /docker/
 RUN chmod +x /docker/download.sh
 RUN --mount=type=cache,target=/data,id=stablediffusion-downloaded /docker/download.sh
 
@@ -43,7 +43,7 @@ ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
 RUN PIP_NO_CACHE_DIR=1 pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
 
-RUN apt-get update && apt install fonts-dejavu-core rsync git jq moreutils -y && apt-get clean
+RUN apt-get update && apt install fonts-dejavu-core rsync git jq moreutils pigz -y && apt-get clean
 
 
 RUN --mount=type=cache,target=/root/.cache/pip <<EOF
