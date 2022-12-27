@@ -1,6 +1,0 @@
-FROM bash:alpine3.15
-
-RUN apk add parallel aria2
-ADD links.txt download.sh checksums.sha256 /docker/
-RUN chmod +x /docker/download.sh
-RUN /docker/download.sh

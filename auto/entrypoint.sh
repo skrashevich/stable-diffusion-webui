@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -Eeuo pipefail
-
+cd /docker && /docker/download.sh
 # TODO: move all mkdir -p ?
 mkdir -p /data/config/auto/scripts/
 cp -n /docker/config.json /data/config/auto/config.json

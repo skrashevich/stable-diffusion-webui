@@ -2,6 +2,8 @@
 
 set -Eeuo pipefail
 
+cd /docker && /docker/download.sh
+
 declare -A MOUNTS
 
 # cache

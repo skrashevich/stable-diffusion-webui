@@ -11,7 +11,7 @@ aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /data --continu
 
 echo "Checking SHAs..."
 
-parallel --will-cite -a /docker/checksums.sha256 "echo -n {} | sha256sum -c"
+#parallel --will-cite -a /docker/checksums.sha256 "echo -n {} | sha256sum -c"
 
 cat <<EOF
 By using this software, you agree to the following licenses:

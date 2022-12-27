@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG DOWNIMAGE=downloads
-FROM ${DOWNIMAGE} as data
+
 FROM alpine/git:2.36.2 as download
 
 SHELL ["/bin/sh", "-ceuxo", "pipefail"]
@@ -38,7 +37,7 @@ ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
 RUN PIP_NO_CACHE_DIR=1 pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
 
-RUN apt-get update && apt install fonts-dejavu-core rsync git jq moreutils -y && apt-get clean
+RUN apt-get update && apt install fonts-dejavu-core rsync git jq moreutils aria2 parallel -y && apt-get clean
 
 
 RUN --mount=type=cache,target=/root/.cache/pip <<EOF
@@ -83,7 +82,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY auto/* /docker/
 
-COPY --from=data /data /data
+ADD links.txt download.sh checksums.sha256 /docker/
+RUN chmod +x /docker/download.sh
 RUN <<EOF
 python3 /docker/info.py ${ROOT}/modules/ui.py
 mv ${ROOT}/style.css ${ROOT}/user.css
