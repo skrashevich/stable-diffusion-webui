@@ -37,7 +37,7 @@ ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
 RUN PIP_NO_CACHE_DIR=1 pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
 
-RUN apt-get update && apt install --no-install-recommends fonts-dejavu-core rsync git jq moreutils aria2 parallel -y && apt-get clean
+RUN apt-get update && apt install --no-install-recommends fonts-dejavu-core rsync git jq moreutils aria2 parallel curl -y && apt-get clean
 
 
 RUN --mount=type=cache,target=/root/.cache/pip <<EOF
@@ -93,5 +93,7 @@ RUN chmod +x /docker/download.sh
 WORKDIR ${ROOT}
 ENV CLI_ARGS=""
 EXPOSE 7860
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -f http://localhost:7860/ || exit 1
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD python3 -u webui.py --listen --port 7860 ${CLI_ARGS}

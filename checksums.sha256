@@ -1,4 +1,5 @@
 cc6cb27103417325ff94f52b7a5d2dde45a7515b25c255d8e396c90014281516  /data/StableDiffusion/v1-5-pruned-emaonly.ckpt
+ad2a33c361c1f593c4a1fb32ea81afce2b5bb7d1983c6b94793a26a3b54b08a0  /data/StableDiffusion/v2-1_768-ema-pruned.ckpt
 c6bbc15e3224e6973459ba78de4998b80b50112b0ae5b5c67113d56b4e366b19  /data/StableDiffusion/sd-v1-5-inpainting.ckpt
 c6a580b13a5bc05a5e16e4dbb80608ff2ec251a162311590c1f34c013d7f3dab  /data/VAE/vae-ft-mse-840000-ema-pruned.ckpt
 e2cd4703ab14f4d01fd1383a8a8b266f9a5833dacee8e6a79d3bf21a1b6be5ad  /data/GFPGAN/GFPGANv1.4.pth
