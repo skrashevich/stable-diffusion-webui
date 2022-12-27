@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1
-
 ARG DOWNIMAGE=downloads
 FROM ${DOWNIMAGE} as data
-
 FROM python:3.10-slim
 SHELL ["/bin/bash", "-ceuxo", "pipefail"]
 
@@ -30,7 +28,7 @@ EOF
 RUN <<EOF
 apt-get update
 # apt-get install build-essential python3-opencv libopencv-dev -y
-apt-get install make g++ libopencv-dev pigz -y
+apt-get install make g++ libopencv-dev -y
 apt-get clean
 cd /usr/lib/x86_64-linux-gnu/pkgconfig/
 ln -sf opencv4.pc opencv.pc

@@ -7,7 +7,7 @@ mkdir -vp /data/.cache /data/StableDiffusion /data/Codeformer /data/GFPGAN /data
 
 echo "Downloading, this might take a while..."
 
-aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /data --continue -m 0 --retry-wait=10 --on-download-complete=pigz.sh
+aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /data --continue -m 0 --retry-wait=10
 
 echo "Checking SHAs..."
 
