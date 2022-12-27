@@ -18,25 +18,6 @@ model:
     finetune_keys: null
     use_ema: False
 
-
-    scheduler_config: # 10000 warmup steps
-      target: ldm.lr_scheduler.LambdaLinearScheduler
-      params:
-        warm_up_steps: [ 2500 ] # NOTE for resuming. use 10000 if starting from scratch
-        cycle_lengths: [ 10000000000000 ] # incredibly large number to prevent corner cases
-        f_start: [ 1.e-6 ]
-        f_max: [ 1. ]
-        f_min: [ 1. ]
-
-    personalization_config:
-      target: ldm.modules.embedding_manager.EmbeddingManager
-      params:
-        placeholder_strings: ["*"]
-        initializer_words: ['sculpture']
-        per_image_tokens: false
-        num_vectors_per_token: 8
-        progressive_words: False
-
     unet_config:
       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
       params:
@@ -50,6 +31,7 @@ model:
         channel_mult: [ 1, 2, 4, 4 ]
         num_head_channels: 64 # need to fix for flash-attn
         use_spatial_transformer: True
+        use_linear_in_transformer: True
         transformer_depth: 1
         context_dim: 1024
         legacy: False
@@ -79,7 +61,10 @@ model:
           target: torch.nn.Identity
 
     cond_stage_config:
-      target: ldm.modules.encoders.modules.WeightedFrozenCLIPEmbedder
+      target: ldm.modules.encoders.modules.FrozenOpenCLIPEmbedder
+      params:
+        freeze: True
+        layer: "penultimate"
 
 
 data:
