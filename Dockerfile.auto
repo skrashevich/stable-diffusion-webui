@@ -82,12 +82,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY auto/* /docker/
 
-ADD links.txt download.sh checksums.sha256 /docker/
-RUN chmod +x /docker/download.sh
 RUN <<EOF
 python3 /docker/info.py ${ROOT}/modules/ui.py
 mv ${ROOT}/style.css ${ROOT}/user.css
 EOF
+
+ADD links.txt download.sh checksums.sha256 /docker/
+RUN chmod +x /docker/download.sh
 
 WORKDIR ${ROOT}
 ENV CLI_ARGS=""
