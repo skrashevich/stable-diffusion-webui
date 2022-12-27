@@ -1,0 +1,26 @@
+name: Test container
+
+on:
+  package:
+    types: [published, updated]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Pull and run container
+        run: |
+          image=${GITHUB_REPOSITORY}
+          tag=${{ github.event.package.package }}
+          docker pull $image:$tag
+          docker run -d -p 7860:7860 $image:$tag
+      - name: Wait for container to start
+        run: |
+          sleep 600
+      - name: Test HTTP response
+        run: |
+          response=$(curl -sL -w "%{http_code}\\n" "http://localhost:7860" -o /dev/null)
+          if [ "$response" != "200" ]; then
+            exit 1
+          fi
