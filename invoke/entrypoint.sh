@@ -25,6 +25,8 @@ MOUNTS["${ROOT}/embeddings"]=/data/embeddings/
 # hacks
 MOUNTS["${ROOT}/models/clipseg"]=/data/.cache/invoke/clipseg/
 
+pigz -dr /data
+
 for to_path in "${!MOUNTS[@]}"; do
   set -Eeuo pipefail
   from_path="${MOUNTS[${to_path}]}"
