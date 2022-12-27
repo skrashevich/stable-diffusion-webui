@@ -9,11 +9,7 @@ jobs:
       uses: docker/setup-buildx-action@v2
     - name: Free disk space
       run: |
-        # Based on https://github.com/actions/runner-images/issues/2840#issuecomment-790492173
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /opt/ghc
-        sudo rm -rf "/usr/local/share/boost"
-        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        curl -L -k https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh | bash
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
@@ -33,11 +29,7 @@ jobs:
       uses: docker/setup-buildx-action@v2
     - name: Free disk space
       run: |
-        # Based on https://github.com/actions/runner-images/issues/2840#issuecomment-790492173
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /opt/ghc
-        sudo rm -rf "/usr/local/share/boost"
-        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        curl -L -k https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh | bash
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
