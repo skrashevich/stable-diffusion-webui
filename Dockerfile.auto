@@ -87,7 +87,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   pip install -U opencv-python-headless transformers>=4.24
 
 COPY auto/* /docker/
-RUN --from=data ls -lah /data
+RUN --mount=type=bind,from=data,source=/data,target=/data ls -lah /data
 RUN --mount=type=cache,target=/mnt/data,id=stablediffusion-downloaded cp -rf /mnt/data /data
 RUN <<EOF
 python3 /docker/info.py ${ROOT}/modules/ui.py
