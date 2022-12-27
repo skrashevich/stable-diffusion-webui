@@ -1,5 +1,6 @@
 name: Publish Docker
 on: [push]
+jobs:
   build-auto:
     runs-on: ubuntu-latest
     needs: build-download
