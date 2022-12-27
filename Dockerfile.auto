@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
-
+ARG DOWNIMAGE=downloads
+FROM ${DOWNIMAGE} as data
 FROM alpine/git:2.36.2 as download
 
 SHELL ["/bin/sh", "-ceuxo", "pipefail"]
@@ -28,12 +29,6 @@ FROM alpine:3 as xformers
 RUN apk add aria2
 RUN aria2c -x 5 --dir / --out wheel.whl 'https://github.com/AbdBarho/stable-diffusion-webui-docker/releases/download/4.0.0/xformers-0.0.16rc393-cp310-cp310-manylinux2014_x86_64.whl'
 
-FROM bash:alpine3.15 as data
-
-RUN apk add parallel aria2
-ADD links.txt download.sh checksums.sha256 /docker/
-RUN chmod +x /docker/download.sh
-RUN --mount=type=cache,target=/data,id=stablediffusion-downloaded /docker/download.sh
 
 FROM python:3.10-slim
 
@@ -87,8 +82,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   pip install -U opencv-python-headless transformers>=4.24
 
 COPY auto/* /docker/
-RUN --mount=type=bind,from=data,source=/data,target=/data ls -lah /data
-RUN --mount=type=cache,target=/mnt/data,id=stablediffusion-downloaded cp -rf /mnt/data /data
+
+COPY --from=data /data /data
 RUN <<EOF
 python3 /docker/info.py ${ROOT}/modules/ui.py
 mv ${ROOT}/style.css ${ROOT}/user.css

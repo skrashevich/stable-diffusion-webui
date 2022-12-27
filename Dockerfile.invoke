@@ -1,13 +1,6 @@
 # syntax=docker/dockerfile:1
-
-FROM bash:alpine3.15 as data
-
-RUN apk add parallel aria2
-ADD links.txt download.sh checksums.sha256 /docker/
-RUN chmod +x /docker/download.sh
-RUN --mount=type=cache,target=/data,id=stablediffusion-downloaded /docker/download.sh
-
-
+ARG DOWNIMAGE=downloads
+FROM ${DOWNIMAGE} as data
 FROM python:3.10-slim
 SHELL ["/bin/bash", "-ceuxo", "pipefail"]
 
@@ -55,8 +48,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 
 COPY invoke/* /docker/
-RUN --mount=type=bind,from=data,source=/data,target=/data ls -lah /data
-RUN --mount=type=cache,target=/mnt/data,id=stablediffusion-downloaded cp -rf /mnt/data /data
+
+COPY --from=data /data /data
 RUN <<EOF
 python3 /docker/info.py /stable-diffusion/frontend/dist/index.html
 touch invokeai.init
