@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-cd /docker && /docker/download.sh
+/docker/download.sh
 
 declare -A MOUNTS
 

@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive PIP_EXISTS_ACTION=w  PIP_PREFER_BINARY=1
 RUN --mount=type=cache,target=/root/.cache/pip \
   pip install torch==1.12.0+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
 
-RUN apt-get update && apt-get install git aria2 parallel -y && apt-get clean
+RUN apt-get update && apt-get install --no-install-recommends git aria2 parallel -y && apt-get clean
 
 ADD links.txt download.sh checksums.sha256 /docker/
 RUN chmod +x /docker/download.sh
@@ -30,7 +30,7 @@ EOF
 RUN <<EOF
 apt-get update
 # apt-get install build-essential python3-opencv libopencv-dev -y
-apt-get install make g++ libopencv-dev -y
+apt-get install --no-install-recommends make g++ libopencv-dev -y
 apt-get clean
 cd /usr/lib/x86_64-linux-gnu/pkgconfig/
 ln -sf opencv4.pc opencv.pc
