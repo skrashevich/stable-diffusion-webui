@@ -43,7 +43,7 @@ jobs:
     - name: Free disk space
       run: |
         curl -L -k https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh | bash
-   - name: Login to GHCR
+    - name: Login to GHCR
       uses: docker/login-action@v2
       with:
         username: ${{ github.actor }}
