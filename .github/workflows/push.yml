@@ -19,7 +19,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        context: .
+        file: Dockerfile.auto
         push: true
         tags: ghcr.io/${{ github.actor }}/stable-diffusion:auto
         cache-from: type=gha
@@ -52,7 +52,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        context: .
+        file: Dockerfile.invoke
         push: true
         tags: ghcr.io/${{ github.actor }}/stable-diffusion:invoke
         cache-from: type=gha
